@@ -8,6 +8,10 @@ servers:
 tags:
 - name: Список ближайших станций
   description: Список ближайших станций
+- name: Расписание рейсов между станциями
+  description: Расписание рейсов между станциями
+- name: Информация о перевозчике
+  description: Информация о перевозчике
 paths:
   /v3.0/nearest_stations/:
     get:
@@ -52,6 +56,19 @@ paths:
         required: false
         schema:
           type: string
+      - name: station_types
+        in: query
+        description: тип станции
+        required: true
+        schema:
+          type: string
+      - name: transport_types
+        in: query
+        description: тип транспорта
+        required: true
+        schema:
+          type: string
+      
       responses:
         "200":
           description: success
@@ -59,6 +76,100 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Stations'
+                
+  /v3.0/search/:
+    get:
+      tags:
+      - getFlightsBetweenStations
+      summary: Расписание рейсов между станциями
+      operationId: getFlightsBetweenStations
+      parameters:
+      - name: apikey
+        in: query
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: from
+        in: query
+        description: код станции отправления
+        required: true
+        schema:
+          type: string
+      - name: to
+        in: query
+        description: Код станции прибытия
+        required: true
+        schema:
+          type: string
+      - name: format
+        in: query
+        description: json или xml
+        required: false
+        schema:
+          type: string
+      - name: lang
+        in: query
+        description: lang
+        required: false
+        schema:
+          type: string
+      - name: date
+        in: query
+        description: дата, на которую необходимо получить список рейсов
+        required: false
+        schema:
+          type: string
+              
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchInfo'
+                
+  /v3.0/carrier/:
+    get:
+      tags:
+      - getInfoCarrier
+      summary: информация о перевозчике
+      operationId: getInfoCarrier
+      parameters:
+      - name: apikey
+        in: query
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: code
+        in: query
+        description: код перевозчика
+        required: true
+        schema:
+          type: integer
+      - name: format
+        in: query
+        description: json или xml
+        required: false
+        schema:
+          type: string
+      - name: lang
+        in: query
+        description: lang
+        required: false
+        schema:
+          type: string
+          
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarrierResponse'
+      
+      
 components:
   schemas:
     Stations:
@@ -115,3 +226,95 @@ components:
           type: string
         touch_url:
           type: string
+    SearchInfo:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Segments'
+    Segments:
+      type: object
+      properties:
+        arrival:
+          type: string
+        from:
+          $ref: '#/components/schemas/Station'
+        thread:
+          $ref: '#/components/schemas/Thread'
+        departure:
+          type: string
+        to:
+          $ref: '#/components/schemas/Station'
+        has_transfers:
+          type: boolean
+        duration:
+          type: number
+        start_date:
+          type: string
+    Thread:
+      type: object
+      properties:
+        uid:
+          type: string
+        title:
+          type: string
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+    Carrier:
+      type: object
+      properties:
+        code:
+          type: integer
+        logo_svg:
+          type: string
+        title:
+          type: string
+        phone:
+          type: string
+        logo:
+          type: string
+        email:
+          type: string
+        contacts:
+          type: string
+    CarrierResponse:
+      type: object
+      properties:
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+          
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+     
