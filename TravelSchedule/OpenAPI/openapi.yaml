@@ -212,7 +212,106 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NearestSettlement'
-
+  /v3.0/schedule/:
+    get:
+      tags:
+        - getScheduleByStation
+      summary: Ближайший город
+      operationId: getScheduleByStation
+      parameters:
+      - name: apikey
+        in: query
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: station
+        in: query
+        description: код станции
+        required: true
+        schema:
+          type: string
+      - name: lang
+        in: query
+        description: lang
+        required: false
+        schema:
+          type: string
+      - name: format
+        in: query
+        description: json или xml
+        required: false
+        schema:
+          type: string
+      - name: date
+        in: query
+        description: дата
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StationScheduleResponse'
+  /v3.0/thread/:
+    get:
+      tags:
+      - getThreadStations
+      summary: Список станций следования нитки
+      operationId: getThreadStations
+      parameters:
+      - name: apikey
+        in: query
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: uid
+        in: query
+        description: Идентификатор нитки
+        required: true
+        schema:
+          type: string
+      - name: from
+        in: query
+        description: Код станции отправления
+        required: false
+        schema:
+          type: string
+      - name: to
+        in: query
+        description: Код станции прибытия
+        required: false
+        schema:
+          type: string
+      - name: format
+        in: query
+        description: json или xml
+        required: false
+        schema:
+          type: string
+      - name: lang
+        in: query
+        description: Язык ответа
+        required: false
+        schema:
+          type: string
+      - name: date
+        in: query
+        description: Дата
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreadStationsResponse'
 components:
   schemas:
     Stations:
@@ -343,8 +442,44 @@ components:
           type: number
         lng:
           type: number
-          
-      
+    StationScheduleResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        station:
+          $ref: '#/components/schemas/Station'
+    ThreadStationsResponse:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: Идентификатор нитки
+        title:
+          type: string
+          description: Название нитки
+        transport_type:
+          type: string
+          description: Тип транспорта
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        stops:
+          type: array
+          description: Список остановок на нитке
+          items:
+            $ref: '#/components/schemas/Stop'
+    Stop:
+      type: object
+      properties:
+        arrival:
+          type: string
+          description: Время прибытия
+        departure:
+          type: string
+          description: Время отправления
+        station:
+          $ref: '#/components/schemas/Station'
+
       
       
       

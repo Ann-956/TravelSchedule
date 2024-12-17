@@ -45,6 +45,24 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .cornerRadius(8)
         }
+        Button(action: {
+            nearestSettlement()
+        }) {
+            Text("расписание рейсов по станции")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+        }
+        Button(action: {
+            threadStations()
+        }) {
+            Text("список станций следования")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+        }
         .padding()
     }
     func stationsTrain() {
@@ -148,6 +166,58 @@ struct ContentView: View {
                 print("Город:", stations)
             } catch {
                 print("Ошибка при получении станций:", error)
+            }
+        }
+    }
+    
+    func scheduleByStation() {
+        let client = Client(
+            serverURL: try! Servers.Server1.url(),
+            transport: URLSessionTransport()
+        )
+        
+        let service = ScheduleByStationService(
+            client: client,
+            apikey: apiKey.yandexApiKey
+        )
+        
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let currentDate = formatter.string(from: now)
+        
+        Task {
+            do {
+                let scheduleByStationInfo = try await service.getScheduleByStation(
+                    station: "s9602494",
+                    date: currentDate
+                )
+                print("инфо", scheduleByStationInfo)
+            } catch {
+                print("Ошибка при получении информации:", error)
+            }
+        }
+    }
+    
+    func threadStations() {
+        let client = Client(
+            serverURL: try! Servers.Server1.url(),
+            transport: URLSessionTransport()
+        )
+        
+        let service = ThreadStationsService(
+            client: client,
+            apikey: apiKey.yandexApiKey
+        )
+        
+        Task {
+            do {
+                let threadStationsInfo = try await service.getThreadStations(
+                    uid: "755A_0_2"
+                )
+                print("инфо", threadStationsInfo)
+            } catch {
+                print("Ошибка при получении информации:", error)
             }
         }
     }
