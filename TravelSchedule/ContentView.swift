@@ -36,6 +36,15 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .cornerRadius(8)
         }
+        Button(action: {
+            nearestSettlement()
+        }) {
+            Text("ближайший город")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+        }
         .padding()
     }
     func stationsTrain() {
@@ -64,6 +73,7 @@ struct ContentView: View {
             }
         }
     }
+    
     func searchInfo() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
@@ -116,6 +126,33 @@ struct ContentView: View {
             }
         }
     }
+    
+    func nearestSettlement() {
+        let client = Client(
+            serverURL: try! Servers.Server1.url(),
+            transport: URLSessionTransport()
+        )
+        
+        let service = NearestSettlementService(
+            client: client,
+            apikey: apiKey.yandexApiKey
+        )
+        
+        Task {
+            do {
+                let stations = try await service.getNearestSettlement(
+                    lat: 59.864177,
+                    lng: 30.319163,
+                    distance: 30
+                )
+                print("Город:", stations)
+            } catch {
+                print("Ошибка при получении станций:", error)
+            }
+        }
+    }
+    
+    
 }
 
 #Preview {

@@ -5,13 +5,6 @@ info:
   version: 3.0.0
 servers:
 - url: https://api.rasp.yandex.net
-tags:
-- name: Список ближайших станций
-  description: Список ближайших станций
-- name: Расписание рейсов между станциями
-  description: Расписание рейсов между станциями
-- name: Информация о перевозчике
-  description: Информация о перевозчике
 paths:
   /v3.0/nearest_stations/:
     get:
@@ -168,8 +161,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CarrierResponse'
-      
-      
+                
+  /v3.0/nearest_settlement/:
+    get:
+      tags:
+        - getNearestSettlement
+      summary: Ближайший город
+      operationId: getNearestSettlement
+      parameters:
+      - name: apikey
+        in: query
+        description: API key
+        required: true
+        schema:
+          type: string
+      - name: lat
+        in: query
+        description: широта
+        required: true
+        schema:
+          type: number
+      - name: lng
+        in: query
+        description: долгота
+        required: true
+        schema:
+          type: number
+      - name: distance
+        in: query
+        description: радиус поиска
+        required: false
+        schema:
+          type: integer
+      - name: lang
+        in: query
+        description: lang
+        required: false
+        schema:
+          type: string
+      - name: format
+        in: query
+        description: json или xml
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NearestSettlement'
+
 components:
   schemas:
     Stations:
@@ -285,6 +328,22 @@ components:
       properties:
         carrier:
           $ref: '#/components/schemas/Carrier'
+    NearestSettlement:
+      type: object
+      properties:
+        code:
+          type: string
+        title:
+          type: string
+        popular_title:
+          type: string
+        short_title:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+          
       
       
       
