@@ -63,6 +63,24 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .cornerRadius(8)
         }
+        Button(action: {
+            stationList()
+        }) {
+            Text("список всех станций")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+        }
+        Button(action: {
+            copyrightList()
+        }) {
+            Text("копирайт яндекса")
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+        }
         .padding()
     }
     func stationsTrain() {
@@ -216,6 +234,48 @@ struct ContentView: View {
                     uid: "755A_0_2"
                 )
                 print("инфо", threadStationsInfo)
+            } catch {
+                print("Ошибка при получении информации:", error)
+            }
+        }
+    }
+    
+    func stationList() {
+        let client = Client(
+            serverURL: try! Servers.Server1.url(),
+            transport: URLSessionTransport()
+        )
+        
+        let service = StationListService(
+            client: client,
+            apikey: apiKey.yandexApiKey
+        )
+        
+        Task {
+            do {
+                let stationListInfo = try await service.getStationList()
+                print("инфо приходит")
+            } catch {
+                print("Ошибка при получении информации:", error)
+            }
+        }
+    }
+    
+    func copyrightList() {
+        let client = Client(
+            serverURL: try! Servers.Server1.url(),
+            transport: URLSessionTransport()
+        )
+        
+        let service = CopyrightService(
+            client: client,
+            apikey: apiKey.yandexApiKey
+        )
+        
+        Task {
+            do {
+                let copyrightInfo = try await service.getCopyrightYandex()
+                print("инфо:", copyrightInfo)
             } catch {
                 print("Ошибка при получении информации:", error)
             }
