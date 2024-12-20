@@ -4,7 +4,11 @@ import OpenAPIURLSession
 typealias FlightsBetweenStations = Components.Schemas.SearchInfo
 
 protocol FlightsBetweenStationsServiceProtocol {
-    func getFlightsBetweenStations(from: String, to: String, date: String) async throws -> FlightsBetweenStations
+    func getFlightsBetweenStations(
+        from: String,
+        to: String,
+        date: String
+    ) async throws -> FlightsBetweenStations
     
 }
 

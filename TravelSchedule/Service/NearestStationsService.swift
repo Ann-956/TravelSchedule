@@ -4,8 +4,16 @@ import OpenAPIURLSession
 
 typealias NearestStations = Components.Schemas.Stations
 
+struct NearestStationsServiceRequest {
+    let lat: Double
+    let lng: Double
+    let distance: Int
+    let stationTypes: String
+    let transportTypes: String
+}
+
 protocol NearestStationsServiceProtocol {
-    func getNearestStations(lat: Double, lng: Double, distance: Int, station_types: String, transport_types: String ) async throws -> NearestStations
+    func getNearestStations(request: NearestStationsServiceRequest) async throws -> NearestStations
 }
 
 final class NearestStationsService: NearestStationsServiceProtocol {
@@ -18,15 +26,15 @@ final class NearestStationsService: NearestStationsServiceProtocol {
         self.apikey = apikey
     }
     
-    func getNearestStations(lat: Double, lng: Double, distance: Int, station_types: String, transport_types: String ) async throws -> NearestStations {
+    func getNearestStations(request: NearestStationsServiceRequest) async throws -> NearestStations {
         
         let response = try await client.getNearestStations(query: .init(
             apikey: apikey,
-            lat: lat,
-            lng: lng,
-            distance: distance,
-            station_types: station_types,
-            transport_types: transport_types
+            lat: request.lat,
+            lng: request.lng,
+            distance: request.distance,
+            station_types: request.stationTypes,
+            transport_types: request.transportTypes
         ))
         return try response.ok.body.json
     }

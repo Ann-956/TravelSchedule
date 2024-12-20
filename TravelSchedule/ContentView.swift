@@ -91,18 +91,19 @@ struct ContentView: View {
         
         let service = NearestStationsService(
             client: client,
-            apikey: apiKey.yandexApiKey
+            apikey: Constants.yandexApiKey
         )
         
         Task {
             do {
-                let stations = try await service.getNearestStations(
-                    lat: 59.864177,
-                    lng: 30.319163,
-                    distance: 30,
-                    station_types: "train_station",
-                    transport_types: "train"
-                )
+                let request = NearestStationsServiceRequest(
+                                lat: 59.864177,
+                                lng: 30.319163,
+                                distance: 30,
+                                stationTypes: "train_station",
+                                transportTypes: "train"
+                            )
+                let stations = try await service.getNearestStations(request: request)
                 print("Станции:", stations)
             } catch {
                 print("Ошибка при получении станций:", error)
@@ -118,7 +119,7 @@ struct ContentView: View {
         
         let service = FlightsBetweenStationsService(
             client: client,
-            apikey: apiKey.yandexApiKey
+            apikey: Constants.yandexApiKey
         )
         
         let now = Date()
@@ -148,7 +149,7 @@ struct ContentView: View {
         
         let service = InfoCarrierService(
             client: client,
-            apikey: apiKey.yandexApiKey
+            apikey: Constants.yandexApiKey
         )
         
         Task {
@@ -171,7 +172,7 @@ struct ContentView: View {
         
         let service = NearestSettlementService(
             client: client,
-            apikey: apiKey.yandexApiKey
+            apikey: Constants.yandexApiKey
         )
         
         Task {
@@ -196,7 +197,7 @@ struct ContentView: View {
         
         let service = ScheduleByStationService(
             client: client,
-            apikey: apiKey.yandexApiKey
+            apikey: Constants.yandexApiKey
         )
         
         let now = Date()
@@ -225,7 +226,7 @@ struct ContentView: View {
         
         let service = ThreadStationsService(
             client: client,
-            apikey: apiKey.yandexApiKey
+            apikey: Constants.yandexApiKey
         )
         
         Task {
@@ -248,7 +249,7 @@ struct ContentView: View {
         
         let service = StationListService(
             client: client,
-            apikey: apiKey.yandexApiKey
+            apikey: Constants.yandexApiKey
         )
         
         Task {
@@ -269,7 +270,7 @@ struct ContentView: View {
         
         let service = CopyrightService(
             client: client,
-            apikey: apiKey.yandexApiKey
+            apikey: Constants.yandexApiKey
         )
         
         Task {
