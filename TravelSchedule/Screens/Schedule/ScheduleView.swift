@@ -1,88 +1,100 @@
 import SwiftUI
 import OpenAPIURLSession
 
-struct ContentView: View {
+struct ScheduleView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ScrollView { // Добавляем прокрутку, если кнопок много
+            VStack(spacing: 20) { // Отступы между кнопками
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundStyle(.tint)
+                Text("Hello, world!")
+                
+                // Кнопки для функций
+                Button(action: {
+                    stationsTrain()
+                }) {
+                    Text("Получить станции поездов")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    searchInfo()
+                }) {
+                    Text("Расписание между станциями")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    infoCarrier()
+                }) {
+                    Text("Информация о перевозчике")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    nearestSettlement()
+                }) {
+                    Text("Ближайший город")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    scheduleByStation()
+                }) {
+                    Text("Расписание рейсов по станции")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    threadStations()
+                }) {
+                    Text("Список станций следования")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    stationList()
+                }) {
+                    Text("Список всех станций")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    copyrightList()
+                }) {
+                    Text("Копирайт Яндекса")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+            }
+            .padding() // Добавляем отступы вокруг кнопок
         }
-        Button(action: {
-            stationsTrain()
-        }) {
-            Text("Получить станции поездов")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            searchInfo()
-        }) {
-            Text("расписание между станциями")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            infoCarrier()
-        }) {
-            Text("информация о перевозчике")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            nearestSettlement()
-        }) {
-            Text("ближайший город")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            nearestSettlement()
-        }) {
-            Text("расписание рейсов по станции")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            threadStations()
-        }) {
-            Text("список станций следования")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            stationList()
-        }) {
-            Text("список всех станций")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            copyrightList()
-        }) {
-            Text("копирайт яндекса")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        .padding()
     }
+}
     func stationsTrain() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
@@ -97,12 +109,12 @@ struct ContentView: View {
         Task {
             do {
                 let request = NearestStationsServiceRequest(
-                                lat: 59.864177,
-                                lng: 30.319163,
-                                distance: 30,
-                                stationTypes: "train_station",
-                                transportTypes: "train"
-                            )
+                    lat: 59.864177,
+                    lng: 30.319163,
+                    distance: 30,
+                    stationTypes: "train_station",
+                    transportTypes: "train"
+                )
                 let stations = try await service.getNearestStations(request: request)
                 print("Станции:", stations)
             } catch {
@@ -284,8 +296,8 @@ struct ContentView: View {
     }
     
     
-}
+
 
 #Preview {
-    ContentView()
+    ScheduleView()
 }
