@@ -2,33 +2,41 @@ import SwiftUI
 
 struct TabBarView: View {
     @StateObject private var themeManager = ThemeManager()
+    @State private var selectedTab = 0
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            TabView {
-                NavigationStack {
-                    ScheduleView()
-                }
-                .tabItem {
-                    Image("Schedule")
-                }
+            TabView(selection: $selectedTab) {
                 
-                NavigationStack {
-                    SettingsView()
-                }
-                .tabItem {
-                    Image("Settings")
-                }
+                ScheduleView()
+                    .tabItem {
+                        Image("Schedule")
+                            .renderingMode(.template)
+                    }
+                    .tag(0)
+                
+                SettingsView()
+                    .tabItem {
+                        Image("Settings")
+                            .renderingMode(.template)
+                    }
+                    .tag(1)
             }
-            .foregroundColor(themeManager.isDarkMode ? .ypBlack : .ypWhite)
-            .accentColor(themeManager.isDarkMode ? .ypWhite : .ypBlack)
-            .environmentObject(themeManager)
             
-            Divider()
-                .background(.ypGray)
-                .frame(height: 1)
-                .padding(.bottom, 49)
+            .accentColor(.ypBlack)
+            .environmentObject(themeManager)
+            .preferredColorScheme(themeManager.isDarkMode ? .dark : .light)
+            .edgesIgnoringSafeArea(.bottom)
+            
+            if !themeManager.isDarkMode {
+                Divider()
+                    .background(.ypGray)
+                    .frame(height: 1)
+                    .padding(.bottom, 49)
+            }
         }
+        .background(.ypWhite)
+        
     }
 }
 
