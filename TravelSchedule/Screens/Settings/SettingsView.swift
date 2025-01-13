@@ -2,23 +2,29 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @State private var userAgreementURL = "https://yandex.ru/legal/practicum_offer"
+    
+    private let darkMode = "Темная тема"
+    private let navigationText = "Пользовательское соглашение"
+    private let apiDescription = "Приложение использует API «Яндекс.Расписания»"
+    private let versionInfo = "Версия 1.0 (beta)"
     
     var body: some View {
         NavigationStack {
             VStack {
                 
                 Toggle(isOn: $themeManager.isDarkMode) {
-                    Text("Темная тема")
+                    Text(darkMode)
                 }
                 .toggleStyle(SwitchToggleStyle(tint: .blue))
                 .padding()
                 
-                NavigationLink(destination: PrivacyPolicyView()) {
+                NavigationLink(destination: UserAgreementView(urlString: $userAgreementURL)) {
                     HStack {
-                        Text("Пользовательское соглашение")
+                        Text(navigationText)
                         Spacer()
                         Image("Chevron")
-                            .foregroundColor(.ypBlack)
+                            .accentColor(.ypBlack)
                     }
                 }
                 .padding(.horizontal)
@@ -26,9 +32,9 @@ struct SettingsView: View {
                 Spacer()
                 
                 VStack {
-                    Text("Приложение использует API «Яндекс.Расписания»")
+                    Text(apiDescription)
                         .padding()
-                    Text("Версия 1.0 (beta)")
+                    Text(versionInfo)
                 }
                 .font(.system(size: 12))
             }
