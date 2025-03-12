@@ -1,111 +1,18 @@
-import SwiftUI
+import Foundation
 import OpenAPIURLSession
 
-struct ScheduleView: View {
-    var body: some View {
-        ScrollView { // Добавляем прокрутку, если кнопок много
-            VStack(spacing: 20) { // Отступы между кнопками
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello, world!")
-                
-                // Кнопки для функций
-                Button(action: {
-                    stationsTrain()
-                }) {
-                    Text("Получить станции поездов")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                
-                Button(action: {
-                    searchInfo()
-                }) {
-                    Text("Расписание между станциями")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                
-                Button(action: {
-                    infoCarrier()
-                }) {
-                    Text("Информация о перевозчике")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                
-                Button(action: {
-                    nearestSettlement()
-                }) {
-                    Text("Ближайший город")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                
-                Button(action: {
-                    scheduleByStation()
-                }) {
-                    Text("Расписание рейсов по станции")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                
-                Button(action: {
-                    threadStations()
-                }) {
-                    Text("Список станций следования")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                
-                Button(action: {
-                    stationList()
-                }) {
-                    Text("Список всех станций")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                
-                Button(action: {
-                    copyrightList()
-                }) {
-                    Text("Копирайт Яндекса")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-            }
-            .padding() // Добавляем отступы вокруг кнопок
-        }
-    }
-}
+
     func stationsTrain() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = NearestStationsService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let request = NearestStationsServiceRequest(
@@ -122,23 +29,23 @@ struct ScheduleView: View {
             }
         }
     }
-    
+
     func searchInfo() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = FlightsBetweenStationsService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         let now = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let currentDate = formatter.string(from: now)
-        
+
         Task {
             do {
                 let stationInfo = try await service.getFlightsBetweenStations(
@@ -152,18 +59,18 @@ struct ScheduleView: View {
             }
         }
     }
-    
+
     func infoCarrier() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = InfoCarrierService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let infoCarrier = try await service.getInfoCarrier(
@@ -175,18 +82,18 @@ struct ScheduleView: View {
             }
         }
     }
-    
+
     func nearestSettlement() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = NearestSettlementService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let stations = try await service.getNearestSettlement(
@@ -200,23 +107,23 @@ struct ScheduleView: View {
             }
         }
     }
-    
+
     func scheduleByStation() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = ScheduleByStationService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         let now = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let currentDate = formatter.string(from: now)
-        
+
         Task {
             do {
                 let scheduleByStationInfo = try await service.getScheduleByStation(
@@ -229,18 +136,18 @@ struct ScheduleView: View {
             }
         }
     }
-    
+
     func threadStations() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = ThreadStationsService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let threadStationsInfo = try await service.getThreadStations(
@@ -252,18 +159,18 @@ struct ScheduleView: View {
             }
         }
     }
-    
+
     func stationList() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = StationListService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let stationListInfo = try await service.getStationList()
@@ -273,18 +180,18 @@ struct ScheduleView: View {
             }
         }
     }
-    
+
     func copyrightList() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = CopyrightService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let copyrightInfo = try await service.getCopyrightYandex()
@@ -294,10 +201,4 @@ struct ScheduleView: View {
             }
         }
     }
-    
-    
 
-
-#Preview {
-    ScheduleView()
-}

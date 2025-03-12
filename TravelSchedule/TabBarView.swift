@@ -2,46 +2,43 @@ import SwiftUI
 
 struct TabBarView: View {
     @StateObject private var themeManager = ThemeManager()
+    @StateObject private var navModel = NavigationModel()
     @State private var selectedTab = 0
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            TabView(selection: $selectedTab) {
+        NavigationStack() {
+            ZStack(alignment: .bottom) {
+                TabView(selection: $selectedTab) {
+                    
+                    MainScreen()
+                        .tabItem {
+                            Image("Schedule")
+                        }
+                        .tag(0)
+                    
+                    SettingsScreen()
+                    
+                        .tabItem {
+                            Image("Settings")
+                        }
+                        .tag(1)
+                }
+                .accentColor(.ypBlack)
+                .environmentObject(themeManager)
+                .preferredColorScheme(themeManager.isDarkMode ? .dark : .light)
+                .edgesIgnoringSafeArea(.bottom)
                 
-                ScheduleView()
-                    .tabItem {
-                        Image("Schedule")
-                            .renderingMode(.template)
-                    }
-                    .tag(0)
-                
-                SettingsView()
-                    .tabItem {
-                        Image("Settings")
-                            .renderingMode(.template)
-                    }
-                    .tag(1)
+                if !themeManager.isDarkMode {
+                    Divider()
+                        .background(.ypGray)
+                        .padding(.bottom, 54)
+                }
             }
-            
-            .accentColor(.ypBlack)
-            .environmentObject(themeManager)
-            .preferredColorScheme(themeManager.isDarkMode ? .dark : .light)
-            .edgesIgnoringSafeArea(.bottom)
-            
-            if !themeManager.isDarkMode {
-                Divider()
-                    .background(.ypGray)
-                    .frame(height: 1)
-                    .padding(.bottom, 49)
-            }
+            .environmentObject(navModel)
         }
-        .background(.ypWhite)
-        
     }
 }
 
-struct TabBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        TabBarView()
-    }
+#Preview {
+    TabBarView()
 }

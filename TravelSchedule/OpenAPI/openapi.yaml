@@ -567,6 +567,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Region'
+        title:
+          type: string
     CopyrightResponse:
       type: object
       properties:
@@ -591,13 +593,3 @@ components:
           type: string
         text:
           type: string
-        
-    
-      
-
-  
-      
-      
-      
-      
-    

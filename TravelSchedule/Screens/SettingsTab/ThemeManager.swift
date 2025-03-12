@@ -1,9 +1,8 @@
 import SwiftUI
 
 final class ThemeManager: ObservableObject {
-    @Published var isDarkMode: Bool = false {
+    @AppStorage("isDarkMode") var isDarkMode: Bool = false {
         didSet {
-            UserDefaults.standard.set(isDarkMode, forKey: "isDarkMode")
             applyTheme()
         }
     }
