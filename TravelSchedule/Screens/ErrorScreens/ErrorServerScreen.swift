@@ -17,8 +17,10 @@ struct ErrorServerScreen: View {
             
             Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
         .generalViewStyle()
+        .ignoresSafeArea()
         
     }
 }

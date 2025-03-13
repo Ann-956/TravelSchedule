@@ -17,8 +17,10 @@ struct ErrorInternetScreen: View {
             
             Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
         .generalViewStyle()
+        .ignoresSafeArea()
         
     }
 }
@@ -26,3 +28,4 @@ struct ErrorInternetScreen: View {
 #Preview {
     ErrorInternetScreen()
 }
+
