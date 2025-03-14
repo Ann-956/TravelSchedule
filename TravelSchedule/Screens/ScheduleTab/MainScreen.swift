@@ -21,30 +21,48 @@ struct MainScreen: View {
                     ZStack {
                         HStack {
                             VStack {
-                                TextField(
-                                    "",
-                                    text: $navModel.selectedDeparture,
-                                    prompt: Text(placeholderFrom)
-                                        .foregroundColor(.ypGray)
-                                )
-                                .padding()
-                                .lineLimit(1)
-                                .frame(height: 48)
-                                .onTapGesture {
+                                Button {
                                     navModel.open(.citiesDeparture)
+                                } label: {
+                                    HStack {
+                                        if navModel.selectedDeparture.isEmpty {
+                                            Text(placeholderFrom)
+                                                .foregroundColor(.ypGray)
+                                        } else {
+                                            Text(navModel.selectedDeparture)
+                                                .foregroundColor(.ypTotalBlack)
+                                        }
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding()
+                                    .lineLimit(1)
+                                    .frame(height: 48)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(Color.ypTotalWhite)
+                                    )
                                 }
                                 
-                                TextField(
-                                    "",
-                                    text: $navModel.selectedArrival,
-                                    prompt: Text(placeholderTo)
-                                        .foregroundColor(.ypGray)
-                                )
-                                .padding()
-                                .lineLimit(1)
-                                .frame(height: 48)
-                                .onTapGesture {
+                                Button {
                                     navModel.open(.citiesArrival)
+                                } label: {
+                                    HStack {
+                                        if navModel.selectedArrival.isEmpty {
+                                            Text(placeholderTo)
+                                                .foregroundColor(.ypGray)
+                                        } else {
+                                            Text(navModel.selectedArrival)
+                                                .foregroundColor(.ypTotalBlack)
+                                        }
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding()
+                                    .lineLimit(1)
+                                    .frame(height: 48)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(Color.ypTotalWhite)
+                                    )
                                 }
                                 
                             }
