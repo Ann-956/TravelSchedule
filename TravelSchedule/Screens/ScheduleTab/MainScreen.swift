@@ -105,42 +105,6 @@ struct MainScreen: View {
                 }
                 .generalViewStyle()
             }
-            .navigationDestination(for: ScheduleScreens.self) { screen in
-                switch screen {
-                case .citiesDeparture:
-                    CitiesScreen(isDeparture: true)
-                        .environmentObject(navModel)
-                    
-                case .stationsDeparture(let city):
-                    StationsScreen(city: city, isDeparture: true)
-                        .environmentObject(navModel)
-                    
-                case .citiesArrival:
-                    CitiesScreen(isDeparture: false)
-                        .environmentObject(navModel)
-                    
-                case .stationsArrival(let city):
-                    StationsScreen(city: city, isDeparture: false)
-                        .environmentObject(navModel)
-                    
-                case .scheduleResult:
-                    ScheduleScreen()
-                        .environmentObject(navModel)
-                        .environmentObject(filterViewModel)
-                    
-                case .carrier(let carrier):
-                    CarrierScreen(carrier: carrier)
-                        .environmentObject(navModel)
-                    
-                case .filterSchedule:
-                    FilterScheduleScreen()
-                        .environmentObject(navModel)
-                        .environmentObject(filterViewModel)
-                }
-            }
-            .environmentObject(navModel)
-            .environmentObject(filterViewModel)
-            
             
             if showNoInternet {
                 ErrorInternetScreen()
@@ -151,20 +115,45 @@ struct MainScreen: View {
             }
         }
         .onAppear {
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 withAnimation {
                     showNoInternet = false
                 }
             }
         }
+        .navigationDestination(for: ScheduleScreens.self) { screen in
+            switch screen {
+            case .citiesDeparture:
+                CitiesScreen(isDeparture: true)
+                    .environmentObject(navModel)
+            case .stationsDeparture(let city):
+                StationsScreen(city: city, isDeparture: true)
+                    .environmentObject(navModel)
+            case .citiesArrival:
+                CitiesScreen(isDeparture: false)
+                    .environmentObject(navModel)
+            case .stationsArrival(let city):
+                StationsScreen(city: city, isDeparture: false)
+                    .environmentObject(navModel)
+            case .scheduleResult:
+                ScheduleScreen()
+                    .environmentObject(navModel)
+                    .environmentObject(filterViewModel)
+            case .carrier(let carrier):
+                CarrierScreen(carrier: carrier)
+                    .environmentObject(navModel)
+            case .filterSchedule:
+                FilterScheduleScreen()
+                    .environmentObject(navModel)
+                    .environmentObject(filterViewModel)
+            }
+        }
+        .environmentObject(navModel)
+        .environmentObject(filterViewModel)
     }
 }
+
 #Preview {
     MainScreen()
         .environmentObject(NavigationModel())
 }
-
-
-
-
