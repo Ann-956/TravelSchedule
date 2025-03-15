@@ -31,6 +31,7 @@ struct StationsScreen: View {
                     Text(error)
                         .font(.system(size: 24, weight: .bold))
                         .foregroundStyle(.ypBlack)
+                        .frame(alignment: .center)
                 }
             }
             ScrollView {

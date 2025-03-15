@@ -22,7 +22,6 @@ struct CitiesScreen: View {
     
     var body: some View {
         ZStack {
-            // Основной контент экрана
             VStack {
                 SearchBar(searchText: $searchText)
                 if filteredCities.isEmpty {
@@ -66,7 +65,7 @@ struct CitiesScreen: View {
             .navigationTitle(title)
             .generalViewStyle()
             
-           
+            
             if showNoServer {
                 ErrorServerScreen()
                     .transition(.opacity)
@@ -74,8 +73,7 @@ struct CitiesScreen: View {
             }
         }
         .onAppear {
-           
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 withAnimation {
                     showNoServer = false
                 }

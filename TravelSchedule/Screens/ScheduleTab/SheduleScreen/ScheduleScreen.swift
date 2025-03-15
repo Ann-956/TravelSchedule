@@ -16,28 +16,32 @@ struct ScheduleScreen: View {
                     .foregroundStyle(.ypBlack)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
+                if filterViewModel.filteredSchedules.isEmpty {
+                    VStack {
+                        Spacer()
+                        Text(errorText)
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundStyle(.ypBlack)
+                            .frame(alignment: .center)
+                    }
+                    
+                }
                 ScrollView {
                     LazyVStack(spacing: 8) {
-                        
-                        if filterViewModel.filteredSchedules.isEmpty {
-                            Spacer()
-                            Text(errorText)
-                                .font(.system(size: 24, weight: .bold))
-                        } else {
-                            
-                            ForEach(filterViewModel.filteredSchedules) { schedule in
-                                Button(action: {
-                                    navModel.open(.carrier(carrier: schedule.carrier))
-                                }) {
-                                    ScheduleRow(schedule: schedule)
-                                }
+                        ForEach(filterViewModel.filteredSchedules) { schedule in
+                            Button(action: {
+                                navModel.open(.carrier(carrier: schedule.carrier))
+                            }) {
+                                ScheduleRow(schedule: schedule)
                             }
                         }
                     }
                     .padding(.bottom, 68)
                 }
                 .scrollIndicators(.hidden)
+                
             }
+            .clipShape(UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 0, bottomLeading: 24, bottomTrailing: 24, topTrailing: 0), style: .continuous))
             
             VStack {
                 Spacer()
@@ -60,7 +64,7 @@ struct ScheduleScreen: View {
                     .background(.ypBlue)
                     .cornerRadius(16)
                 }
-                .padding(.bottom, 0)
+                .padding(.bottom, 3)
             }
         }
         .padding()

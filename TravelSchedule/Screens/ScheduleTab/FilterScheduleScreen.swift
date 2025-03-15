@@ -3,6 +3,7 @@ import SwiftUI
 struct FilterScheduleScreen: View {
     @EnvironmentObject var navModel: NavigationModel
     @EnvironmentObject var filterViewModel: FilterViewModel
+    @EnvironmentObject var themeManager: ThemeManager
     
     private let textTitleTime = "Время отправления"
     private let textTransfers = "Показывать варианты с пересадками"
@@ -36,7 +37,9 @@ struct FilterScheduleScreen: View {
                                 
                                 Spacer()
                                 
-                                Image(filterViewModel.selectedTimes.contains(timeOption) ? "ExcludeTab" : "Exclude")
+                                Image(filterViewModel.selectedTimes.contains(timeOption) ?
+                                      (themeManager.isDarkMode ? "ExcludeTabWhite" : "ExcludeTab") :
+                                      (themeManager.isDarkMode ? "ExcludeWhite" : "Exclude"))
                                     .resizable()
                                     .frame(width: 24, height: 24)
                             }
@@ -66,7 +69,9 @@ struct FilterScheduleScreen: View {
                                 
                                 Spacer()
                                 
-                                Image(filterViewModel.showTransfers == (option == "Да") ? "CycleTab" : "Cycle")
+                                Image(filterViewModel.showTransfers == (option == "Да") ?
+                                      (themeManager.isDarkMode ? "CircleTabWhite" : "СircleTab") :
+                                      (themeManager.isDarkMode ? "СircleWhite" : "Сircle"))
                                     .resizable()
                                     .frame(width: 24, height: 24)
                             }
@@ -103,8 +108,7 @@ struct FilterScheduleScreen: View {
             filterViewModel.selectedTimes.insert(timeOption)
         }
     }
-
-
+    
     private func toggleTransferSelection(_ option: String) {
         if (option == "Да" && filterViewModel.showTransfers == true) ||
             (option == "Нет" && filterViewModel.showTransfers == false) {
@@ -115,9 +119,9 @@ struct FilterScheduleScreen: View {
     }
 }
 
-
 #Preview {
     FilterScheduleScreen()
         .environmentObject(NavigationModel())
         .environmentObject(FilterViewModel())
+        .environmentObject(ThemeManager())
 }
