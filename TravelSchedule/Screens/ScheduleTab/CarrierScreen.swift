@@ -6,19 +6,23 @@ struct CarrierScreen: View {
     private let emailText = "E-mail"
     private let phoneText = "Телефон"
     @EnvironmentObject var navModel: NavigationModel
-
+    
     var body: some View {
         VStack(alignment: .leading) {
-
+            
             Image(carrier.logo)
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity, maxHeight: 104)
+
+                .cornerRadius(24)
                 .padding(.vertical, 16)
-                .frame(maxWidth: .infinity)
             
             VStack(alignment: .leading) {
                 Text(carrier.title)
                     .font(.system(size: 24, weight: .bold))
                     .padding(.bottom, 16)
-                   
+                
                 if let email = carrier.email {
                     VStack(alignment: .leading) {
                         Text(emailText)
@@ -29,7 +33,7 @@ struct CarrierScreen: View {
                     }
                     .padding(.bottom, 16)
                 }
-
+                
                 if let phone = carrier.phone {
                     VStack(alignment: .leading) {
                         Text(phoneText)
@@ -40,10 +44,11 @@ struct CarrierScreen: View {
                     }
                 }
             }
-
+            
             Spacer()
         }
         .padding()
+        
         .navigationBarTitle(navigationTitle, displayMode: .inline)
         .generalViewStyle()
         .navigationBarStyle(dismissAction: {
@@ -53,6 +58,6 @@ struct CarrierScreen: View {
 }
 
 #Preview {
-    CarrierScreen(carrier: mockCarriers[1])
+    CarrierScreen(carrier: mockCarriers[0])
         .environmentObject(NavigationModel())
 }
