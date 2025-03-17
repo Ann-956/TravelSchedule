@@ -35,11 +35,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0A88101A2D030A0B004756A2 /* TravelSchedule */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TravelSchedule;
-			sourceTree = "<group>";
-		};
 		0A88102B2D030A0D004756A2 /* TravelScheduleTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TravelScheduleTests;
@@ -48,6 +43,11 @@
 		0A8810352D030A0D004756A2 /* TravelScheduleUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TravelScheduleUITests;
+			sourceTree = "<group>";
+		};
+		0AF7EA3F2D3BF6AB004616D2 /* TravelSchedule */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TravelSchedule;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -89,7 +89,7 @@
 		0A88100F2D030A0B004756A2 = {
 			isa = PBXGroup;
 			children = (
-				0A88101A2D030A0B004756A2 /* TravelSchedule */,
+				0AF7EA3F2D3BF6AB004616D2 /* TravelSchedule */,
 				0A88102B2D030A0D004756A2 /* TravelScheduleTests */,
 				0A8810352D030A0D004756A2 /* TravelScheduleUITests */,
 				0A83559F2D0DB0C8000FC915 /* Frameworks */,
@@ -124,7 +124,7 @@
 				0A8355A52D0DB0D6000FC915 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0A88101A2D030A0B004756A2 /* TravelSchedule */,
+				0AF7EA3F2D3BF6AB004616D2 /* TravelSchedule */,
 			);
 			name = TravelSchedule;
 			packageProductDependencies = (
@@ -429,9 +429,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -459,9 +460,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

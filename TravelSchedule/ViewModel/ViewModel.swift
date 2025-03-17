@@ -1,108 +1,27 @@
-import SwiftUI
+import Foundation
 import OpenAPIURLSession
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        Button(action: {
-            stationsTrain()
-        }) {
-            Text("Получить станции поездов")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            searchInfo()
-        }) {
-            Text("расписание между станциями")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            infoCarrier()
-        }) {
-            Text("информация о перевозчике")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            nearestSettlement()
-        }) {
-            Text("ближайший город")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            nearestSettlement()
-        }) {
-            Text("расписание рейсов по станции")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            threadStations()
-        }) {
-            Text("список станций следования")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            stationList()
-        }) {
-            Text("список всех станций")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        Button(action: {
-            copyrightList()
-        }) {
-            Text("копирайт яндекса")
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-        }
-        .padding()
-    }
+
     func stationsTrain() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = NearestStationsService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let request = NearestStationsServiceRequest(
-                                lat: 59.864177,
-                                lng: 30.319163,
-                                distance: 30,
-                                stationTypes: "train_station",
-                                transportTypes: "train"
-                            )
+                    lat: 59.864177,
+                    lng: 30.319163,
+                    distance: 30,
+                    stationTypes: "train_station",
+                    transportTypes: "train"
+                )
                 let stations = try await service.getNearestStations(request: request)
                 print("Станции:", stations)
             } catch {
@@ -110,23 +29,23 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func searchInfo() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = FlightsBetweenStationsService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         let now = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let currentDate = formatter.string(from: now)
-        
+
         Task {
             do {
                 let stationInfo = try await service.getFlightsBetweenStations(
@@ -140,18 +59,18 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func infoCarrier() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = InfoCarrierService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let infoCarrier = try await service.getInfoCarrier(
@@ -163,18 +82,18 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func nearestSettlement() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = NearestSettlementService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let stations = try await service.getNearestSettlement(
@@ -188,23 +107,23 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func scheduleByStation() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = ScheduleByStationService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         let now = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let currentDate = formatter.string(from: now)
-        
+
         Task {
             do {
                 let scheduleByStationInfo = try await service.getScheduleByStation(
@@ -217,18 +136,18 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func threadStations() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = ThreadStationsService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let threadStationsInfo = try await service.getThreadStations(
@@ -240,18 +159,18 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func stationList() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = StationListService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let stationListInfo = try await service.getStationList()
@@ -261,18 +180,18 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func copyrightList() {
         let client = Client(
             serverURL: try! Servers.Server1.url(),
             transport: URLSessionTransport()
         )
-        
+
         let service = CopyrightService(
             client: client,
             apikey: Constants.yandexApiKey
         )
-        
+
         Task {
             do {
                 let copyrightInfo = try await service.getCopyrightYandex()
@@ -282,10 +201,4 @@ struct ContentView: View {
             }
         }
     }
-    
-    
-}
 
-#Preview {
-    ContentView()
-}
