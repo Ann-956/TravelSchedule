@@ -8,12 +8,10 @@ final class ThemeManager: ObservableObject {
     }
     
     init() {
-        self.isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         applyTheme()
     }
     
     private func applyTheme() {
-        
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             windowScene.windows.forEach { window in
                 window.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
