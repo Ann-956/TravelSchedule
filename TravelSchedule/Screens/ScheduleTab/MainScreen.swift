@@ -13,7 +13,8 @@ struct MainScreen: View {
     var body: some View {
         ZStack {
             VStack {
-                Spacer()
+                StoriesCollectionView()
+                    .padding(.bottom, 20) 
                 
                 ZStack {
                     HStack {
@@ -61,11 +62,10 @@ struct MainScreen: View {
                                         .fill(Color.ypTotalWhite)
                                 )
                             }
-                            
                         }
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(.ypTotalWhite)
+                                .fill(Color.ypTotalWhite)
                         )
                         .font(.system(size: 17))
                         
@@ -80,9 +80,11 @@ struct MainScreen: View {
                 }
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(.ypBlue)
+                        .fill(Color.ypBlue)
                 )
-                .padding()
+                .padding(.horizontal, 16)
+                
+                Spacer()
                 
                 if !navModel.selectedDeparture.isEmpty && !navModel.selectedArrival.isEmpty {
                     Button(action: {
@@ -93,12 +95,13 @@ struct MainScreen: View {
                             .font(.system(size: 17, weight: .bold))
                             .foregroundColor(.ypTotalWhite)
                             .frame(width: 150, height: 60)
-                            .background(RoundedRectangle(cornerRadius: 16).fill(.ypBlue))
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color.ypBlue)
+                            )
                     }
                     .padding(.horizontal)
                 }
-                
-                Spacer()
             }
             .generalViewStyle()
             
