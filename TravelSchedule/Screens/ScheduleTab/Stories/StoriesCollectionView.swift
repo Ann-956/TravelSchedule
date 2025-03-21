@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct StoriesCollectionView: View {
-    @State private var stories: [Stories] = mockStories
+    @State private var stories: [Stories] = Mocks.stories
     @State private var showFullScreen: Bool = false
     @State private var selectedIndex: Int = 0
 

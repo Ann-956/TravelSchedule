@@ -23,11 +23,9 @@ struct MiniStoryThumbnail: View {
         .overlay(
             Group {
                 if story.isViewed {
-                    themeManager.isDarkMode ?
-                    Color.ypTotalBlack.opacity(0.5)
-                        .clipShape(RoundedRectangle(cornerRadius: 16)) :
-                    Color.ypTotalWhite.opacity(0.5)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                    themeManager.isDarkMode
+                    ? Color.ypTotalBlack.opacity(0.5).clipShape(RoundedRectangle(cornerRadius: 16))
+                    : Color.ypTotalWhite.opacity(0.5).clipShape(RoundedRectangle(cornerRadius: 16))
                 } else {
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(.ypBlue, lineWidth: 4)
@@ -38,6 +36,6 @@ struct MiniStoryThumbnail: View {
 }
 
 #Preview {
-    MiniStoryThumbnail(story: .constant(mockStories[0]))
+    MiniStoryThumbnail(story: .constant(Mocks.stories[0]))
         .environmentObject(ThemeManager())
 }

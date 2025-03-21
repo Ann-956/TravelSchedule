@@ -34,6 +34,6 @@ struct StoryContentFullView: View {
     Color.black
         .ignoresSafeArea()
         .overlay {
-            StoryContentFullView(story: mockStories[0])
+            StoryContentFullView(story: Mocks.stories[0])
         }
 }

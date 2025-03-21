@@ -27,29 +27,6 @@ struct ProgressBar: View {
     }
 }
 
-private struct MaskView: View {
-    let numberOfSections: Int
-
-    var body: some View {
-        HStack {
-            ForEach(0..<numberOfSections, id: \.self) { _ in
-                MaskFragmentView()
-            }
-        }
-    }
-}
-
-struct MaskFragmentView: View {
-    var body: some View {
-        RoundedRectangle(cornerRadius: 3)
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(height: 6)
-            .foregroundStyle(.ypTotalWhite)
-    }
-}
-
-
-
 #Preview {
     Color.black
         .ignoresSafeArea()

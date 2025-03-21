@@ -93,5 +93,5 @@ struct StoryFullView: View {
 }
 
 #Preview {
-    StoryFullView(stories: .constant(mockStories))
+    StoryFullView(stories: .constant(Mocks.stories))
 }
