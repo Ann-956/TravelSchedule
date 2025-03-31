@@ -4,7 +4,7 @@ struct MainScreen: View {
     
     @EnvironmentObject var navModel: NavigationModel
     @EnvironmentObject var filterViewModel: FilterViewModel
-    @State private var showNoInternet = true
+    @EnvironmentObject var mainViewModel: MainViewModel
     
     private var placeholderFrom = "Откуда"
     private var placeholderTo = "Куда"
@@ -14,7 +14,7 @@ struct MainScreen: View {
         ZStack {
             VStack {
                 StoriesCollectionView()
-                    .padding(.bottom, 20) 
+                    .padding(.bottom, 20)
                 
                 ZStack {
                     HStack {
@@ -23,11 +23,11 @@ struct MainScreen: View {
                                 navModel.open(.citiesDeparture)
                             } label: {
                                 HStack {
-                                    if navModel.selectedDeparture.isEmpty {
+                                    if mainViewModel.selectedDeparture.isEmpty {
                                         Text(placeholderFrom)
                                             .foregroundColor(.ypGray)
                                     } else {
-                                        Text(navModel.selectedDeparture)
+                                        Text(mainViewModel.selectedDeparture)
                                             .foregroundColor(.ypTotalBlack)
                                     }
                                 }
@@ -45,11 +45,11 @@ struct MainScreen: View {
                                 navModel.open(.citiesArrival)
                             } label: {
                                 HStack {
-                                    if navModel.selectedArrival.isEmpty {
+                                    if mainViewModel.selectedArrival.isEmpty {
                                         Text(placeholderTo)
                                             .foregroundColor(.ypGray)
                                     } else {
-                                        Text(navModel.selectedArrival)
+                                        Text(mainViewModel.selectedArrival)
                                             .foregroundColor(.ypTotalBlack)
                                     }
                                 }
@@ -70,7 +70,7 @@ struct MainScreen: View {
                         .font(.system(size: 17))
                         
                         Button(action: {
-                            swap(&navModel.selectedDeparture, &navModel.selectedArrival)
+                            mainViewModel.swapStations()
                         }) {
                             Image("Change")
                         }
@@ -84,9 +84,8 @@ struct MainScreen: View {
                 )
                 .padding(.horizontal, 16)
                 
-                Spacer()
-                
-                if !navModel.selectedDeparture.isEmpty && !navModel.selectedArrival.isEmpty {
+            
+                if !mainViewModel.selectedDeparture.isEmpty && !mainViewModel.selectedArrival.isEmpty {
                     Button(action: {
                         filterViewModel.resetFilters()
                         navModel.open(.scheduleResult)
@@ -101,22 +100,11 @@ struct MainScreen: View {
                             )
                     }
                     .padding(.horizontal)
+                    .padding(.top, 10)
                 }
+                Spacer()
             }
             .generalViewStyle()
-            
-            if showNoInternet {
-                ErrorInternetScreen()
-                    .transition(.opacity)
-                    .zIndex(1)
-            }
-        }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                withAnimation {
-                    showNoInternet = false
-                }
-            }
         }
     }
 }

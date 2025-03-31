@@ -1,28 +1,52 @@
 import SwiftUI
 
-class FilterViewModel: ObservableObject {
-    @Published var filteredSchedules: [Schedule] = [] 
-    private var allSchedules = mockSchedule
+@MainActor
+final class FilterViewModel: ObservableObject, Sendable {
+    @Published var filteredSchedules: [Schedule] = []
+    private var allSchedules: [Schedule] = []
+    @Published var isLoading: Bool = false
+    @Published var isError: Bool = false
     
     @Published var selectedTimes: Set<String> = []
     @Published var showTransfers: Bool? = nil
-
+    
     init() {
         resetFilters()
+    }
+    
+    func loadSchedules(departure: String, arrival: String) async {
+        isLoading = true
+        isError = false
+
+        let service = FlightsBetweenStationsServiceNetwork()
+        
+        do {
+            let scheduleSearch = try await service.searchInfo(from: departure, to: arrival)
+            let sortedSchedule = scheduleSearch.sorted { $0.date < $1.date }
+            
+            self.allSchedules = sortedSchedule
+            self.filteredSchedules = sortedSchedule
+            isLoading = false
+        } catch {
+            self.allSchedules = []
+            self.filteredSchedules = []
+            isLoading = false
+            isError = true
+        }
     }
 
     
     var isFilterApplied: Bool {
         !selectedTimes.isEmpty || showTransfers != nil
     }
-
-
+    
+    
     func applyFilters() {
         if selectedTimes.isEmpty && showTransfers == nil {
-            filteredSchedules = allSchedules 
+            filteredSchedules = allSchedules
             return
         }
-
+        
         filteredSchedules = allSchedules.filter { schedule in
             let isTimeValid = selectedTimes.isEmpty || selectedTimes.contains { timeRange in
                 switch timeRange {
@@ -45,8 +69,8 @@ class FilterViewModel: ObservableObject {
         }
         objectWillChange.send()
     }
-
-
+    
+    
     private func isInTimeRange(_ time: String, start: String, end: String) -> Bool {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"

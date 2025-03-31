@@ -10,6 +10,8 @@ struct StationsScreen: View {
     let city: City
     let isDeparture: Bool
     @EnvironmentObject var navModel: NavigationModel
+    @EnvironmentObject var mainViewModel: MainViewModel
+    
     
     var filteredStations: [Station] {
         if searchText.isEmpty {
@@ -45,11 +47,13 @@ struct StationsScreen: View {
                         }
                         .padding()
                         .onTapGesture {
-                            let result = city.title + " (" + station.title + ")"
+                         
                             if isDeparture {
-                                navModel.selectedDeparture = result
+                                mainViewModel.departureStation = station
+                                mainViewModel.createDepartureText()
                             } else {
-                                navModel.selectedArrival = result
+                                mainViewModel.arrivalStation = station
+                                mainViewModel.createArrivalText()
                             }
                             navModel.backToRoot()
                         }
@@ -74,4 +78,5 @@ struct StationsScreen: View {
         isDeparture: true
     )
     .environmentObject(NavigationModel())
+    .environmentObject(MainViewModel())
 }

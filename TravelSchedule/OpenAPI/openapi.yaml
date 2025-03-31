@@ -405,8 +405,11 @@ components:
           type: string
         popular_title:
           type: string
-        code:
-          type: string
+        codes:
+          type: object
+          properties:
+            yandex_code:
+              type: string
         lat:
           type: number
         lng:
@@ -454,6 +457,8 @@ components:
           $ref: '#/components/schemas/Station'
         has_transfers:
           type: boolean
+        stops:
+          type: string
         duration:
           type: number
         start_date:

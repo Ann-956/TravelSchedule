@@ -2,10 +2,10 @@ import SwiftUI
 
 struct SettingsScreen: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @StateObject var viewModel = SettingsViewModel()
     
     private let darkMode = "Темная тема"
     private let navigationText = "Пользовательское соглашение"
-    private let apiDescription = "Приложение использует API «Яндекс.Расписания»"
     private let versionInfo = "Версия 1.0 (beta)"
     
     var body: some View {
@@ -30,8 +30,12 @@ struct SettingsScreen: View {
             Spacer()
             
             VStack {
-                Text(apiDescription)
-                    .padding()
+                if viewModel.copyrightText.isEmpty {
+                    ProgressView()
+                } else {
+                    Text(viewModel.copyrightText)
+                        .padding()
+                }
                 Text(versionInfo)
             }
             .font(.system(size: 12))
@@ -40,6 +44,11 @@ struct SettingsScreen: View {
         .foregroundColor(.ypBlack)
         .font(.system(size: 17))
         .generalViewStyle()
+        .onAppear {
+            Task {
+                await viewModel.getCopyrightText()
+            }
+        }
     }
 }
 

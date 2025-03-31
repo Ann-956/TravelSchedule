@@ -8,7 +8,7 @@ protocol StationListServiceProtocol  {
     func getStationList() async throws -> StationList
 }
 
-final class StationListService: StationListServiceProtocol {
+actor StationListService: StationListServiceProtocol, Sendable {
     
     private let client: Client
     private let apikey: String

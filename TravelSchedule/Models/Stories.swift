@@ -1,3 +1,5 @@
+import Foundation
+
 struct Stories {
     let backgroundImage: String
     let title: String
