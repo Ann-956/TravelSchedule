@@ -33,7 +33,7 @@ actor FlightsBetweenStationsServiceNetwork: Sendable {
             to: to
         )
         
-        let schudule = search.segments?.compactMap { segment -> Schedule? in
+        let schedule = search.segments?.compactMap { segment -> Schedule? in
             let date = segment.start_date
             let departure = segment.departure
             let arrival = segment.arrival
@@ -64,7 +64,7 @@ actor FlightsBetweenStationsServiceNetwork: Sendable {
                 )
             )
         }
-        return schudule ?? []
+        return schedule ?? []
     }
     
     

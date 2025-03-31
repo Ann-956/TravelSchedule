@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SettingsScreen: View {
     @EnvironmentObject var themeManager: ThemeManager
-    @StateObject var viewModel = SettingsViewModel()
+    @StateObject private var viewModel = SettingsViewModel()
     
     private let darkMode = "Темная тема"
     private let navigationText = "Пользовательское соглашение"

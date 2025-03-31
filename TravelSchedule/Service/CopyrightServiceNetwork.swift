@@ -5,10 +5,12 @@ import OpenAPIURLSession
 actor CopyrightServiceNetwork: Sendable {
     
     func copyrightList() async throws -> String? {
-        guard (try? Servers.Server1.url()) != nil else { return "" }
+        guard let serverURL = try? Servers.Server1.url() else {
+            return ""
+        }
         
         let client = Client(
-            serverURL: try! Servers.Server1.url(),
+            serverURL: serverURL,
             transport: URLSessionTransport()
         )
         

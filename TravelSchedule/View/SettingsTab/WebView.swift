@@ -23,11 +23,11 @@ struct WebView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> WebViewCoordinator {
-        return WebViewCoordinator(viewModel: viewModel)
+        WebViewCoordinator(viewModel: viewModel)
     }
 }
 
-class WebViewCoordinator: NSObject, WKNavigationDelegate {
+final class WebViewCoordinator: NSObject, WKNavigationDelegate {
     var viewModel: UserAgreementViewModel
 
     init(viewModel: UserAgreementViewModel) {
