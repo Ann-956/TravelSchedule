@@ -8,7 +8,7 @@ protocol ScheduleByStationServiceProtocol {
     
 }
 
-final class ScheduleByStationService: ScheduleByStationServiceProtocol {
+actor ScheduleByStationService: ScheduleByStationServiceProtocol, Sendable {
     
     private let client: Client
     private let apikey: String

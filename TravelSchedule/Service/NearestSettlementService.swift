@@ -11,7 +11,7 @@ protocol NearestSettlementServiceProtocol {
     ) async throws -> NearestSettlement
 }
 
-final class NearestSettlementService: NearestSettlementServiceProtocol {
+actor NearestSettlementService: NearestSettlementServiceProtocol, Sendable {
     
     private let client: Client
     private let apikey: String

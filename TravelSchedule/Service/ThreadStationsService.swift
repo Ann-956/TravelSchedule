@@ -8,7 +8,7 @@ protocol ThreadStationsServiceProtocol {
     
 }
 
-final class ThreadStationsService: ThreadStationsServiceProtocol {
+actor ThreadStationsService: ThreadStationsServiceProtocol, Sendable{
     
     private let client: Client
     private let apikey: String

@@ -7,7 +7,7 @@ protocol InfoCarrierServiceProtocol {
     func getInfoCarrier(code: Int) async throws -> InfoCarrier
 }
 
-final class InfoCarrierService: InfoCarrierServiceProtocol {
+actor InfoCarrierService: InfoCarrierServiceProtocol, Sendable {
     
     private let client: Client
     private let apikey: String
